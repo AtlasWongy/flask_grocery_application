@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.login-form {
+    width: 400px;
+    grid-template-rows: 1fr 1fr 1fr;
+    display: grid;
+    row-gap: 10px;
+}
+
+.label-container {
+    grid-template-columns: 1fr 0.2fr 4fr;
+    display: grid;
+}
+
+button {
+    width: 200px;
+    justify-self: center;
+}
