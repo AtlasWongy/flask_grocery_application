@@ -16,9 +16,6 @@ class groceryList(db.Model):
     reminder = db.Column(db.Boolean, nullable=False, default=False)
     int_date = db.Column(db.DateTime, default=db.func.now())
 
-    # def __str__(self):
-    #     return f'{self.grocery_id} x {self.quantity}; getBy: {self.date_to_get}; reminder{self.reminder}'
-
 def grocery_serializer(grocery):
     return {
         'grocery_id': grocery.grocery_id,
@@ -28,7 +25,8 @@ def grocery_serializer(grocery):
         'reminder': grocery.reminder,
         'int_date': grocery.int_date
     }
-# Get data
+
+# Get Groceries
 @app.route('/api',methods = ['GET'])
 def grocIndex():
     return jsonify([*map(grocery_serializer, groceryList.query.all())])
@@ -56,14 +54,12 @@ def deleteGrocery(grocery_id):
         db.session.commit()
         return {'204':"Delete Success"}
 
-# # Authenticate User
-# @app.route ('/api/auth', method = ["PUT"])   
-# def logginAuth():
-#     request_data = json.loads(request.data)
-#     username = request_data['username']
-#     password = request_data['password']
-
-
+# Authenticate User
+@app.route('/api/auth', methods = ["POST"])   
+def loginAuth():
+    request_data = json.loads(request.data)
+    print(request_data)
+    return {'200': 'Sample'}
 
 if __name__ == '__main__':
     app.run(debug=True)

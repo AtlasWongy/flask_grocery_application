@@ -5,7 +5,7 @@ import Title from './components/Title/Title'
 import { Header } from './component/Header';
 import {Groceries} from './component/Groceries';
 import { useState, useEffect } from 'react';
-import axios from './api/posts'
+import axios from './api/axios'
 import { AddGroceries } from './component/AddGroceries';
 function App() {
   const [groceries, setGroceries] = useState([''])
