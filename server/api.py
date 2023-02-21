@@ -4,12 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/flaskdatabase'
+app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/grocerydatabase'
 db = SQLAlchemy(app)
 
 class groceryList(db.Model):
     __tablename__ = 'groceryList'
-
     grocery_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     grocery = db.Column(db.String(250), nullable=False)
     quantity = db.Column(db.Integer)
@@ -38,7 +37,6 @@ def grocIndex():
 @app.route ('/api/add', methods = ['POST'])
 def postGroceries ():
     request_data = json.loads(request.data)
-    groceries_list = []
     groceries = groceryList(
         grocery = request_data['grocery'],
         quantity = request_data['quantity'],

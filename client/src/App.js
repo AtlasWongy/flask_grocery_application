@@ -32,9 +32,9 @@ function App() {
     <div className="App">
       <Title/>
       <LoginForm/>
-        <Header text ={"Groceries List"}/>
+        {/* <Header text ={"Groceries List"}/>
         <AddGroceries/>
-        <Groceries groceries = {groceries} />
+        <Groceries groceries = {groceries} /> */}
     </div>
   );
 }
