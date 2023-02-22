@@ -1,4 +1,4 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
 }
@@ -18,4 +18,16 @@
 button {
     width: 200px;
     justify-self: center;
+} */
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.offscreen {
+    position: absolute;
+    left: -9999px;
 }

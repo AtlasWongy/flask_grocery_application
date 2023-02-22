@@ -2,12 +2,12 @@ import axios from 'axios'
 import React from 'react'
 
 export const Grocery = ({grocery}) => {
-    const deteleGrocery = async() =>{
+    const deteleGrocery = async(id) =>{
         
          try{
             console.log(grocery.grocery_id)
-            await axios.delete(`/api/${grocery.grocery_id}`)
-            .then(response=>{
+            await axios.delete(`/api/${id}`)
+            .then(response=>{ 
                 console.log(response.data)
             })
          } catch(err){
@@ -33,7 +33,7 @@ export const Grocery = ({grocery}) => {
                     <td>{grocery.quantity}</td>
                     <td>{grocery.date_to_get}</td>
                     <td>
-                        <button onClick = {deteleGrocery}>Delete</button>
+                        <button onClick = {()=>deteleGrocery(grocery.grocery_id)}>Delete</button>
                         <button>Edit</button>
                     </td>
                 </tr>

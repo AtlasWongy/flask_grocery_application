@@ -5,7 +5,7 @@ export const AddGroceries = ()=>{
     const [grocery, setGrocery] = useState('')
     const [quantity, setQuantity] = useState('')
     const [date, setDate] = useState('')
-
+    
     const onSubmit = (e)=>{
         e.preventDefault()
         if(!grocery){
@@ -13,7 +13,6 @@ export const AddGroceries = ()=>{
             return
         }
         const addToDB = async ()=>{
-
             try{
                 const postData = {
                     grocery: grocery,
@@ -30,6 +29,7 @@ export const AddGroceries = ()=>{
         setGrocery('')
         setQuantity('')
         setDate('')
+        // fetchGroceries()
     }
     return(
         <form className ="add-form" onSubmit={onSubmit}>
@@ -47,7 +47,7 @@ export const AddGroceries = ()=>{
                 <label>Quantity</label>
                 <input 
                     type = "text"
-                    placeholder='DD/MM/YY'
+                    placeholder='-'
                     value = {quantity}
                     onChange = {(e)=>{setQuantity(e.target.value)}}
                 ></input>
@@ -56,7 +56,7 @@ export const AddGroceries = ()=>{
                 <label>Date to Get</label>
                 <input 
                     type = "text"
-                    placeholder='Date'
+                    placeholder='DD/MM/YY'
                     value = {date}
                     onChange = {(e)=>{setDate(e.target.value)}}
                 ></input>

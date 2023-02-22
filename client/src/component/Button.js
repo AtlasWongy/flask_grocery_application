@@ -5,3 +5,4 @@ export const Button =({color, text})=>{
         <button color = {color}>{text}</button>
     )
 }
+

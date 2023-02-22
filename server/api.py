@@ -1,11 +1,18 @@
 from flask import Flask, jsonify, request, json
 from flask_mysqldb import MySQL
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+# import bcrypt
+import jwt as jwts
+import secrets
 
 app = Flask(__name__)
-
-app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/grocerydatabase'
+secret_key = secrets.token_hex(32)
+app.config ['SECRET_KEY'] = secret_key
+app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/flaskdatabase'
 db = SQLAlchemy(app)
+jwt = JWTManager(app)
 
 class groceryList(db.Model):
     __tablename__ = 'groceryList'
@@ -16,8 +23,19 @@ class groceryList(db.Model):
     reminder = db.Column(db.Boolean, nullable=False, default=False)
     int_date = db.Column(db.DateTime, default=db.func.now())
 
-    # def __str__(self):
-    #     return f'{self.grocery_id} x {self.quantity}; getBy: {self.date_to_get}; reminder{self.reminder}'
+    def __str__(self):
+        return f'{self.grocery_id} x {self.quantity}; getBy: {self.date_to_get}; reminder{self.reminder}'
+
+    
+class users(db.Model):
+     __tablename__ = 'groceryUsers'
+     id = db.Column(db.Integer, nullable=False, autoincrement = True, primary_key = True)
+     username = db.Column(db.String(80), nullable = False, unique=True )
+     password = db.Column(db.String(80), nullable = False)
+
+     def __repr__(self):
+          return f'<users{self.username}>'
+    
 
 def grocery_serializer(grocery):
     return {
@@ -56,12 +74,71 @@ def deleteGrocery(grocery_id):
         db.session.commit()
         return {'204':"Delete Success"}
 
+# Update Groceries
+@app.route('/api/<int:grocery_id>', methods=['PUT'])
+def updateGrocery(grocery_id):
+    grocerylist = groceryList.query.get_or_404(grocery_id)
+    request_data = json.loads(request.data)
+    grocerylist.grocery = request_data['grocery']
+    grocerylist.quantity = request_data['quantity']
+    grocerylist.date_to_get = request_data['date_to_get']
+    db.session.commit()
+    return {'Success' : 'grocery data updated sucessfully'}
+
+
 # # Authenticate User
-# @app.route ('/api/auth', method = ["PUT"])   
+# @app.route ('/api/auth', methods = ["POST"])   
 # def logginAuth():
 #     request_data = json.loads(request.data)
-#     username = request_data['username']
-#     password = request_data['password']
+#     print(request_data)
+#     username = request_data['user']
+#     password = request_data['pass']
+#     user = users.query.filter_by(username=username).first()
+#     password = users.query.filter_by(password=password).first()
+#     if user and password:
+#         return jsonify({"message": "Authentication successful"})
+#     else:
+#         return jsonify({"error": "Invalid username or password"})
+
+@app.route('/api/register', methods=['POST'])
+def register():
+     try:
+        username = request.json['username']
+        passwordNH = request.json['password']
+        # print(passwordNH)
+        password = generate_password_hash(passwordNH)
+        print (password)
+
+        user = users(username = username, password = password)
+        db.session.add(user)
+        print ('DEBUG')
+        print(db.session.add(user))
+        db.session.commit()
+        return jsonify({"message":"user added"})
+     except:
+        return jsonify({"message":f'Username: {username} exist <br/> Please input a new username'})
+
+@app.route('/api/login', methods =['POST'])
+def login():
+     username = request.json['username']
+     password = request.json['password']
+     user = users.query.filter_by(username=username).first()
+
+     if user and check_password_hash(user.password, password):
+        # payload = {'sub':user.id}
+        access_token = create_access_token(identity=user.id, additional_claims={"sub": user.id})
+        # access_token = jwts.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
+        return jsonify ({'access_token': access_token}), 200
+     return jsonify({'error': 'Invalid username or password'}), 401
+
+@app.route('/api/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    
+    current_user_id = get_jwt_identity()
+    print(current_user_id)
+    user = users.query.filter_by(id=current_user_id).first()
+    return jsonify({'message': f'Hello {user.username}! This is a protected page!' }),200
 
 
 
