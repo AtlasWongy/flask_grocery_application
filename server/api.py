@@ -10,7 +10,7 @@ import secrets
 app = Flask(__name__)
 secret_key = secrets.token_hex(32)
 app.config ['SECRET_KEY'] = secret_key
-app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/flaskdatabase'
+app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/grocerydatabase'
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
@@ -139,7 +139,6 @@ def protected():
     print(current_user_id)
     user = users.query.filter_by(id=current_user_id).first()
     return jsonify({'message': f'Hello {user.username}! This is a protected page!' }),200
-
 
 
 if __name__ == '__main__':
