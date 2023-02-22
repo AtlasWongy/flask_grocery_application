@@ -67,13 +67,15 @@ const fetchGroceries = async ()=>{
        {/* <Login setAccessToken={setAccessToken} accessToken={accessToken}/>
        <Logout setAccessToken={setAccessToken}/>
        <Protected accessToken={accessToken} /> */}
-
-    <Router>
+      <Groceries groceries={groceries}/>
+      <AddGroceries/>
+    {/* Router */}
+    {/* <Router>
       <Routes>
         <Route exact path="/" element={<Login setAccessToken={setAccessToken}/>} />
         <Route path="/signup" element={<SignUpPage/>} />
       </Routes>
-    </Router>
+    </Router> */}
       {/* <Router>
         <Routes>
           <Route exact path="/">

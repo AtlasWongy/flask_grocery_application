@@ -3,12 +3,12 @@ import React from 'react'
 
 export const Grocery = ({grocery}) => {
     const deteleGrocery = async(id) =>{
-        
          try{
             console.log(grocery.grocery_id)
-            await axios.delete(`/api/${id}`)
-            .then(response=>{ 
-                console.log(response.data)
+            await axios.delete(`/api/${id}`, {
+                data: {
+                    grocery_id: id
+                }
             })
          } catch(err){
             console.log(`Error:${err.messagae}`)
