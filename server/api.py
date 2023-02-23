@@ -90,9 +90,7 @@ def deleteGrocery(grocery_id):
 def updateGrocery(grocery_id):
     grocerylist = groceryList.query.get_or_404(grocery_id)
     request_data = json.loads(request.data)
-    grocerylist.grocery = request_data['grocery']
     grocerylist.quantity = request_data['quantity']
-    grocerylist.date_to_get = request_data['date_to_get']
     db.session.commit()
     return {'Success' : 'grocery data updated sucessfully'}, 201
 

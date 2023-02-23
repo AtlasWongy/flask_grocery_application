@@ -31,12 +31,12 @@ export const Grocery = ({grocery}) => {
             console.log(`Error:${err.messagae}`)
          }
     }
+
+    const routeToEdit = async(id) => {
+        // navigate(`/edit/${id}`)
+    }
+
     return(
-        // <div>
-        //     <h3 key={grocery.grocery_id}>{grocery.grocery}</h3>
-        //     <button>Delete</button>
-        //     <button>Edit</button>
-        // </div>
         <div>
             <table>
                 <tr>
