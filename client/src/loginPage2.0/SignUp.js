@@ -6,8 +6,7 @@ export const SignUpPage =()=>{
     const [password, setPassWord] = useState('')
     const [errmsg, setErrMsg] =useState('') 
     const [success, setSuccess] =useState(false)
-    const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
-
+    
     const navigate = useNavigate();
 
     const handleSignUp = async (e)=>{
@@ -35,17 +34,18 @@ export const SignUpPage =()=>{
             <form onSubmit={handleSignUp}>
                 <label>
                     Username:
-                    <input text='text' required value = {username} onChange={(e)=>{setUserName(e.target.value)}}/>
+                    <input type='text' required value = {username} onChange={(e)=>{setUserName(e.target.value)}}/>
                 </label>
                 <br/>
                 <label>
                     Password:
-                    <input text='text' required value = {password} onChange={(e)=>{setPassWord(e.target.value)}}/>
+                    <input type="password" required value = {password} onChange={(e)=>{setPassWord(e.target.value)}}/>
                 </label>
                 <br/>
                 <button type='submit'>Sign Up</button>
             </form>
             <Link to ='/'>Back to Login Page</Link>
+            {!success? <p>{errmsg}</p>:<></>}
         </div>
     )
 }

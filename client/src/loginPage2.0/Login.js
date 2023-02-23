@@ -1,38 +1,63 @@
-import {useState} from 'react';
+import {useState ,useEffect} from 'react';
 import axios from 'axios';
 import bcrypt from 'bcryptjs'
 import {Link} from 'react-router-dom'
 import { Logout } from './Logout';
+import Cookies from 'js-cookie';
 // import https from 'https';
+ 
 
-export const Login = ({setAccessToken, accessToken})=>{
+
+export const Login = ({setAccessToken, accessToken, setPrimaryKey})=>{
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('');
-    const [error, setError] = useState ('')
+    const [error, setError] = useState (false)
+    const [errorMsg, setErrorMsg] = useState('')
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setError(false)
+            setErrorMsg('')
+        }, 4000)
+        return () => {
+          clearTimeout(timeoutId)
+        }
+    }, [error])
+
+
+    const d= new Date();
+    d.setTime(d.getTime() + (20*6*10000));
+
+
+
+
     const handleLogin = async (e) =>{
         e.preventDefault();
-        // const hashedPassword = await bcrypt.hash(password, 10)
-        localStorage.removeItem('access_token')
-        setAccessToken(null)
-        console.log(localStorage.getItem('access_token'))
-        console.log('pre')
-        console.log(accessToken)
-        
+        // const hashedPassword = await bcrypt.hash(password, 10)        
         try{
             const response = await axios.post('api/login', {username, password}
             ). then ((response)=>{
                 // console.log(response.data)
-                localStorage.setItem('access_token',response.data.access_token)
-                setAccessToken(response.data.access_token)
-                console.log(localStorage.getItem('access_token'))
-                // console.log('post')
-                
-                
-                
+                if (response.status == '200'){
+                    console.log(200)
+                    Cookies.set('userId',response.data.primaryKey)
+                    console.log(`Primary Key:${response.data.primaryKey}`)
+                    localStorage.setItem('access_token',response.data.access_token)
+                    Cookies.set('access_token', response.data.access_token, { expires: d });
+                    console.log(`cookies:${Cookies.get('access_token')}`)
+                    setAccessToken(Cookies.get('access_token'))
+                    console.log(`accessToken: ${accessToken}`)
+                } 
             })
 
         } catch (err){
-            setError(err.response.data.message)
+            if (err.response.status=== 401){
+                setError(err.response.data.message)
+                setError(true)
+                setErrorMsg('Wrong username and password entered. Please try again')
+            }
+
+            
         }
     }
 
@@ -42,16 +67,19 @@ export const Login = ({setAccessToken, accessToken})=>{
             {error && <div>{error}</div>}
             <form onSubmit={handleLogin}>
                 <label>Username:
-                    <input type = "text" value={username} onChange={(e)=>{setUserName(e.target.value)}}/>
+                    <input type = "text" required value={username} onChange={(e)=>{setUserName(e.target.value) }}/>
                 </label>
                 <br/>
                 <label>Password:
-                    <input type="text" value = {password} onChange={(e)=>{setPassword(e.target.value)}}/>
+                    <input type="password"  required value = {password} onChange={(e)=>{setPassword(e.target.value)}}/>
                 </label>   
                 <br/>
-                <button type = "submit">Login</button>
+                <button type = "submit">Login</button>            
+                {error&&<p>{errorMsg}</p>}
             </form>
+
             <Link to = '/signup'>Don't have an account yet? Sign up here</Link>
+        
             
         </div>
     )
