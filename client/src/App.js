@@ -60,6 +60,7 @@ function App() {
         <Route path="/protected" element={accessToken?<Protected accessToken={accessToken} primaryKey={primaryKey}/> :<Link to="/"/>} />
         <Route path="/signup" element={<SignUpPage/>} />
         <Route path ='/logout' element = {<Logout setAccessToken={setAccessToken}/>}/>
+        <Route exact path = '/edit/:id' element = {<EditGroceries/>}/>
       </Routes>
     </Router>
     {accessToken?<Protected accessToken={accessToken}  primaryKey={primaryKey}/> : <></>}
