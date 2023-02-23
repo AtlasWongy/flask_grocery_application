@@ -1,12 +1,29 @@
 import axios from 'axios'
 import React from 'react'
+import { Button } from './Button'
+import './style.css';
+import {
+    useParams,
+    Link
+} from 'react-router-dom'
 
 export const Grocery = ({grocery}) => {
+    
+    const grocery_id = grocery.grocery_id
+    const groceryName = grocery.grocery
+    
+
+
     const deteleGrocery = async(id) =>{
         
          try{
             console.log(grocery.grocery_id)
-            await axios.delete(`/api/${id}`)
+            console.log(id)
+            await axios.delete(`/api/${id}`,{
+                data:{
+                    grocery_id:id
+                }
+            })
             .then(response=>{ 
                 console.log(response.data)
             })
@@ -32,10 +49,10 @@ export const Grocery = ({grocery}) => {
                     <td>{grocery.grocery}</td>
                     <td>{grocery.quantity}</td>
                     <td>{grocery.date_to_get}</td>
-                    <td>
-                        <button onClick = {()=>deteleGrocery(grocery.grocery_id)}>Delete</button>
-                        <button>Edit</button>
-                    </td>
+                    <>
+                        <Button grocery_id={grocery_id} groceryName={groceryName} text ={"Delete"}/>
+                        <Button grocery_id={grocery_id} groceryName={groceryName} text = {"Edit"}/>
+                    </>
                 </tr>
 
             </table>

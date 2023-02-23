@@ -1,97 +1,65 @@
 import './App.css';
-import LoginForm from './components/Forms/LoginForm';
-import Title from './components/Title/Title'
-
-import { Header } from './component/Header';
-import {Groceries} from './component/Groceries';
 import { useState, useEffect } from 'react';
-import axios from './api/posts'
-import { AddGroceries } from './component/AddGroceries';
-import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route, Link, useNavigate} from 'react-router-dom'
 import { Login } from './loginPage2.0/Login';
 import { Protected } from './component/Protected';
 import { Logout } from './loginPage2.0/Logout';
 import { SignUpPage } from './loginPage2.0/SignUp';
+import { PromptTimeOut } from './component/promptTimeOut';
+import Cookies from 'js-cookie';
 function App() {
-  const [groceries, setGroceries] = useState([''])
-  const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
 
+  const [accessToken, setAccessToken] = useState(Cookies.get('access_token'));
+  const [promptSession, setPromptSession] = useState(false)
+  const [primaryKey, setPrimaryKey] = useState('')
+
+  // Time for cookies check (1min before expiry)
+  const time = (20 * 6 * 10000)
+  // On load set access token to '' and localstorage access token
   useEffect(()=>{
-    fetchGroceries()
+    if(Cookies.get('access_token')=== null && Cookies.get('access_token')=== '' && Cookies.get('access_token')===undefined){
+      const onStart = ()=>{
+        localStorage.removeItem('access_token');
+        console.log(accessToken)
+        console.log(Cookies.get('access_token'))
+      }
+      onStart()
+    }
   },[])
-// Get Groceries from DB
-const fetchGroceries = async ()=>{
-  try{
-    const response = await axios.get('/api')
-    setGroceries(response.data)
+    // Cookie prompt time out
+  useEffect(() => {
+    console.log('In AT Timer')
+    console.log(Cookies.get('access_token'))
+    console.log(accessToken)
+    if(accessToken!== null && accessToken!== '' && accessToken!==undefined){
+      const timeoutId = setTimeout(() => {
+        // Cookies.remove('access_token')
+        // console.log(accessToken)
+        // console.log(Cookies.get('access_token'))
+        setPromptSession(true)
+      }, time)
+      return () => {
+        clearTimeout(timeoutId)
+      }
+   }else {return console.log(`accessToken= ${accessToken}`)}
+  }, [accessToken, ])
+  // promptSession
 
-  } catch (err){
-    if(err.response){
-      console.log(err.response.data)
-      console.log(err.response.status)
-      console.log(err.response.header)
-    } else console.log(`Error: ${err.message}`)
-  }
-}
+
   return (
-    // <div className="App">
-    //   <Router>
-    //     <Title/>
-    //     <LoginForm/>
-    //     <Header text ={"Groceries List"}/>
-    //     <AddGroceries/>
-    //     <Groceries groceries = {groceries} />
-    //   </Router>
-    // </div>
-    // <div>
-    //   <Router>
-    //     <Routes>
-    //       <Route exact path = "/">
-    //         {accessToken?<Link to = '/protected'/> : <Login setAccessToken={setAccessToken}/>}
-    //       </Route>
-    //       <Route path = "/protected">
-    //         {accessToken? (
-    //           <Protected accessToken={accessToken}/>
-    //         ):
-    //         <Link to = "/"/>
-    //         }
-    //       </Route>
-    //       <Route path ="/logout">
-    //         <Logout setAccessToken={setAccessToken}/>
-    //       </Route>
-    //     </Routes>
-    //   </Router>
-    //   {accessToken && (<div><a href='/logout'>Logout</a></div>)}
-    // </div>
+    
     <div>
-       {/* <Login setAccessToken={setAccessToken} accessToken={accessToken}/>
-       <Logout setAccessToken={setAccessToken}/>
-       <Protected accessToken={accessToken} /> */}
-
+{/* Current */}
     <Router>
       <Routes>
-        <Route exact path="/" element={<Login setAccessToken={setAccessToken}/>} />
+        <Route exact path = '/' element = {accessToken?<Link to = '/protected'/>:<Login setAccessToken={setAccessToken} accessToken={accessToken} setPrimaryKey={setPrimaryKey}/>}/>
+        <Route path="/protected" element={accessToken?<Protected accessToken={accessToken} primaryKey={primaryKey}/> :<Link to="/"/>} />
         <Route path="/signup" element={<SignUpPage/>} />
+        <Route path ='/logout' element = {<Logout setAccessToken={setAccessToken}/>}/>
       </Routes>
     </Router>
-      {/* <Router>
-        <Routes>
-          <Route exact path="/">
-            {accessToken ? <Link to="/protected" /> :  <Login setAccessToken={setAccessToken}/>}
-          </Route>
-          <Route path="/protected">
-            {accessToken ? (
-              <Protected accessToken={accessToken} />
-            ) : (
-              <Link to="/" />
-            )}
-          </Route>
-          <Route path="/logout">
-            <Logout setAccessToken={setAccessToken} />
-          </Route>
-        </Routes>
-      </Router>
-      {accessToken && <div><Link to="/logout">Logout</Link></div>} */}
+    {accessToken?<Protected accessToken={accessToken}  primaryKey={primaryKey}/> : <></>}
+    {promptSession&&<PromptTimeOut  setAccessToken={setAccessToken} setPromptSession={setPromptSession}/>}
     </div>
     );
 }
