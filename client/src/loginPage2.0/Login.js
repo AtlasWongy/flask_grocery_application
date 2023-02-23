@@ -2,6 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import bcrypt from 'bcryptjs'
 import {Link} from 'react-router-dom'
+import { Logout } from './Logout';
 // import https from 'https';
 
 export const Login = ({setAccessToken, accessToken})=>{
@@ -51,6 +52,7 @@ export const Login = ({setAccessToken, accessToken})=>{
                 <button type = "submit">Login</button>
             </form>
             <Link to = '/signup'>Don't have an account yet? Sign up here</Link>
+            
         </div>
     )
 }
