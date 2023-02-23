@@ -12,6 +12,10 @@ import { Login } from './loginPage2.0/Login';
 import { Protected } from './component/Protected';
 import { Logout } from './loginPage2.0/Logout';
 import { SignUpPage } from './loginPage2.0/SignUp';
+import { EditGroceries } from './component/EditGroceries';
+
+
+
 function App() {
   const [groceries, setGroceries] = useState([''])
   const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
@@ -63,12 +67,17 @@ const fetchGroceries = async ()=>{
     //   </Router>
     //   {accessToken && (<div><a href='/logout'>Logout</a></div>)}
     // </div>
-    <div>
+    <div className = "App">
+      <Router>
+        <Routes>
+          <Route exact path='/' element={<Groceries groceries = {groceries}/>}/>
+          <Route exact path='/edit/:id' element={<EditGroceries/>}/>
+        </Routes>
+      </Router>
        {/* <Login setAccessToken={setAccessToken} accessToken={accessToken}/>
        <Logout setAccessToken={setAccessToken}/>
        <Protected accessToken={accessToken} /> */}
-      <Groceries groceries={groceries}/>
-      <AddGroceries/>
+      {/* <Groceries groceries={groceries}/> */}
     {/* Router */}
     {/* <Router>
       <Routes>

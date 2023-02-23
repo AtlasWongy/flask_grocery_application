@@ -1,7 +1,11 @@
 import axios from 'axios'
 import React from 'react'
+import { useNavigate } from 'react-router'
 
 export const Grocery = ({grocery}) => {
+
+    const navigate = useNavigate()
+
     const deteleGrocery = async(id) =>{
          try{
             console.log(grocery.grocery_id)
@@ -14,12 +18,12 @@ export const Grocery = ({grocery}) => {
             console.log(`Error:${err.messagae}`)
          }
     }
+
+    const routeToEdit = async(id) => {
+        navigate(`/edit/${id}`)
+    }
+
     return(
-        // <div>
-        //     <h3 key={grocery.grocery_id}>{grocery.grocery}</h3>
-        //     <button>Delete</button>
-        //     <button>Edit</button>
-        // </div>
         <div>
             <table>
                 <tr>
@@ -34,7 +38,7 @@ export const Grocery = ({grocery}) => {
                     <td>{grocery.date_to_get}</td>
                     <td>
                         <button onClick = {()=>deteleGrocery(grocery.grocery_id)}>Delete</button>
-                        <button>Edit</button>
+                        <button onClick ={()=>routeToEdit(grocery.grocery_id)}>Edit</button>
                     </td>
                 </tr>
 
