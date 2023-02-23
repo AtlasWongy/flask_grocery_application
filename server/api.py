@@ -97,8 +97,6 @@ def updateGrocery(grocery_id):
     return {'Success' : 'grocery data updated sucessfully'}, 201
 
 
-
-
 @app.route('/api/register', methods=['POST'])
 def register():
      try:
