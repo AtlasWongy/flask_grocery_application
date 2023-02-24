@@ -14,9 +14,9 @@ function App() {
 
   // Time for cookies check (1min before expiry)
     // For Cookie prompt
-  const time = (0.5 * 6 * 10000)
+  const time = (5 * 6 * 10000)
     // For cookie life span
-  const cookzLifeSpan = (1*6*10000)
+  const cookzLifeSpan = (9*6*10000)
 
   // On load set access token to '' and localstorage access token
   useEffect(()=>{

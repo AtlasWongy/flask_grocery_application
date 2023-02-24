@@ -17,7 +17,7 @@ export const PromptTimeOut = ({setAccessToken, setPromptSession, cookzLifeSpan})
         }
     };
     const d= new Date();
-    d.setTime(d.getTime() + cookzLifeSpan);
+    d.setTime(d.getTime() + (10*6*10000));
 
     const handleExtend =()=>{
         // Cookies.remove('access_token')
@@ -48,7 +48,8 @@ export const PromptTimeOut = ({setAccessToken, setPromptSession, cookzLifeSpan})
     <div>
         <Modal isOpen ={open} style={customStyles} appElement={document.getElementById('root')}>
             <p>
-                Your session will expire in 1 minutes. <br/>
+                Your session will expire in 5 minutes. <br/>
+                You will be log out automatically after that<br/>
                 Click 'Yes' to extend your session. <br/>
                 Click 'No' to exit your sessions.
             </p>

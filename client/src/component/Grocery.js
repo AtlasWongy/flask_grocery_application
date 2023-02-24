@@ -7,7 +7,7 @@ import {
     Link
 } from 'react-router-dom'
 
-export const Grocery = ({grocery}) => {
+export const Grocery = ({grocery, setGroceries}) => {
     
     const grocery_id = grocery.grocery_id
     const groceryName = grocery.grocery
@@ -50,8 +50,8 @@ export const Grocery = ({grocery}) => {
                     <td>{grocery.quantity}</td>
                     <td>{grocery.date_to_get}</td>
                     <>
-                        <Button grocery_id={grocery_id} groceryName={groceryName} text ={"Delete"}/>
-                        <Button grocery_id={grocery_id} groceryName={groceryName} text = {"Edit"}/>
+                        <Button grocery_id={grocery_id} groceryName={groceryName} setGroceries={setGroceries} text ={"Delete"}/>
+                        <Button grocery_id={grocery_id} groceryName={groceryName} setGroceries={setGroceries} text = {"Edit"}/>
                     </>
                 </tr>
 

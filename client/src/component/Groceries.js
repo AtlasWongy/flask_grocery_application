@@ -37,7 +37,7 @@ const fetchGroceries = async ()=>{
     <>
         {groceries.map(grocery=>{
             return(
-                <Grocery grocery={grocery} key={grocery.grocery_id}/>   
+                <Grocery grocery={grocery} key={grocery.grocery_id} setGroceries={setGroceries}/>   
             )
         })}
     </>

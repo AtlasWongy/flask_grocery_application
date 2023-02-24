@@ -21,7 +21,7 @@ export const Login = ({setAccessToken, accessToken, cookzLifeSpan})=>{
 
 
     const d= new Date();
-    d.setTime(d.getTime() + cookzLifeSpan);
+    d.setTime(d.getTime() + (10*6*10000));
 
 
 

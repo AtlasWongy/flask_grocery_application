@@ -4,6 +4,7 @@ import { Header } from "./Header";
 import { AddGroceries } from "./AddGroceries";
 import { Groceries } from "./Groceries";
 import './style.css'
+import { EditDetails } from "./EditDetails";
 
 export const Protected = ({accessToken, primaryKey}) =>{
     // console.log('inprotected')
@@ -43,7 +44,12 @@ export const Protected = ({accessToken, primaryKey}) =>{
         <div className = "overallContainer">
             <Header text ={"Groceries List"} setAddGrocery={setAddGrocery}/>
             <p>{message}</p>
-        
+            {/* <Router>
+                <Routes>
+                    <Route path='/:id' element ={<EditDetails/>}/>
+                </Routes>
+            </Router> */}
+
             <AddGroceries addGrocery={addGrocery} setGroceries= {setGroceries}/>
             <Groceries setGroceries= {setGroceries} groceries={groceries} />    
             {accessToken && (<div className = "logoutBtn"><a className = "logout" href="/logout">Logout</a></div>)}
