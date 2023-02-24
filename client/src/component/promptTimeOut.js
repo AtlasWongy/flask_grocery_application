@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 // import {RandomHash} from 'random-hash'
 
 
-export const PromptTimeOut = ({setAccessToken, setPromptSession}) =>{
+export const PromptTimeOut = ({setAccessToken, setPromptSession, cookzLifeSpan}) =>{
     const [open, setOpen] = useState(true);
     // const navigate = useNavigate();
     const customStyles = {
@@ -17,7 +17,7 @@ export const PromptTimeOut = ({setAccessToken, setPromptSession}) =>{
         }
     };
     const d= new Date();
-    d.setTime(d.getTime() + (1*6*10000));
+    d.setTime(d.getTime() + cookzLifeSpan);
 
     const handleExtend =()=>{
         // Cookies.remove('access_token')
@@ -33,6 +33,7 @@ export const PromptTimeOut = ({setAccessToken, setPromptSession}) =>{
             Cookies.set('access_token', localStorage.getItem('access_token'), { expires: d })
             // const placeHolder = RandomHash({length: 20})
             let r = Math.random().toString(36).substring(7)
+            console.log(r)
             setAccessToken(r)
             // setAccessToken(Cookies.get('access_token'))
             // updateAccessToken("placeholder")

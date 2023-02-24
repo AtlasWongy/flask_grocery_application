@@ -1,14 +1,9 @@
 import {useState ,useEffect} from 'react';
 import axios from 'axios';
-import bcrypt from 'bcryptjs'
 import {Link} from 'react-router-dom'
-import { Logout } from './Logout';
 import Cookies from 'js-cookie';
-// import https from 'https';
- 
 
-
-export const Login = ({setAccessToken, accessToken, setPrimaryKey})=>{
+export const Login = ({setAccessToken, accessToken, cookzLifeSpan})=>{
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('');
     const [error, setError] = useState (false)
@@ -26,7 +21,7 @@ export const Login = ({setAccessToken, accessToken, setPrimaryKey})=>{
 
 
     const d= new Date();
-    d.setTime(d.getTime() + (20*6*10000));
+    d.setTime(d.getTime() + cookzLifeSpan);
 
 
 
@@ -52,7 +47,7 @@ export const Login = ({setAccessToken, accessToken, setPrimaryKey})=>{
 
         } catch (err){
             if (err.response.status=== 401){
-                setError(err.response.data.message)
+                // setError(err.response.data.message)
                 setError(true)
                 setErrorMsg('Wrong username and password entered. Please try again')
             }

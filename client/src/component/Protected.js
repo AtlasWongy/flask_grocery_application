@@ -12,13 +12,10 @@ export const Protected = ({accessToken, primaryKey}) =>{
 
     //New Test
     const [groceries, setGroceries] = useState([''])
+    // const [loading, setLoading] = useState(true)
 
     useEffect (()=>{
         const fetchData = async ()=>{
-            // console.log('in protected')
-            // console.log(accessToken)
-            // console.log('Local Storage access token')
-            // console.log(localStorage.getItem('access_token'))
             try{
                 const response = await axios.get('/api/protected',{
                     headers:{
@@ -27,6 +24,7 @@ export const Protected = ({accessToken, primaryKey}) =>{
                 })
                 // console.log('post response')
                 setMessage(response.data.message)
+                // setLoading(false)
                 // console.log('ITWORKSs')
                 // console.log(response.data.message)
             } catch(e){
@@ -36,11 +34,17 @@ export const Protected = ({accessToken, primaryKey}) =>{
         }
         fetchData()
     },[accessToken])
+
+    // if (loading) {
+    //     return <div>Loading...</div>
+    //   }
+    
     return (
         <div className = "overallContainer">
             <Header text ={"Groceries List"} setAddGrocery={setAddGrocery}/>
             <p>{message}</p>
-            <AddGroceries addGrocery={addGrocery} primaryKey={primaryKey} setGroceries= {setGroceries}/>
+        
+            <AddGroceries addGrocery={addGrocery} setGroceries= {setGroceries}/>
             <Groceries setGroceries= {setGroceries} groceries={groceries} />    
             {accessToken && (<div className = "logoutBtn"><a className = "logout" href="/logout">Logout</a></div>)}
         </div>

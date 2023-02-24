@@ -10,7 +10,7 @@ import secrets
 app = Flask(__name__)
 secret_key = secrets.token_hex(32)
 app.config ['SECRET_KEY'] = secret_key
-app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/grocerydatabase'
+app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/flaskdatabase'
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
