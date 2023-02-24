@@ -9,8 +9,6 @@ import { PromptTimeOut } from './component/promptTimeOut';
 import Cookies from 'js-cookie';
 import { EditGroceries } from './component/EditGroceries';
 
-
-
 function App() {
 
   const [accessToken, setAccessToken] = useState(Cookies.get('access_token'));
