@@ -4,7 +4,7 @@ import { Header } from "./Header";
 import { AddGroceries } from "./AddGroceries";
 import { Groceries } from "./Groceries";
 import './style.css'
-import { EditDetails } from "./EditDetails";
+import { EditDetails } from "./EditGroceries";
 
 export const Protected = ({accessToken, primaryKey}) =>{
     // console.log('inprotected')

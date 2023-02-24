@@ -19,12 +19,8 @@ export const Login = ({setAccessToken, accessToken, cookzLifeSpan})=>{
         }
     }, [error])
 
-
     const d= new Date();
     d.setTime(d.getTime() + (10*6*10000));
-
-
-
 
     const handleLogin = async (e) =>{
         e.preventDefault();
@@ -74,8 +70,6 @@ export const Login = ({setAccessToken, accessToken, cookzLifeSpan})=>{
             </form>
 
             <Link to = '/signup'>Don't have an account yet? Sign up here</Link>
-        
-            
         </div>
     )
 }

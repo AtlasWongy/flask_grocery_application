@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { EditGroceries } from './EditGroceries';
 
 export const Button =({grocery_id, groceryName, text, setGroceries})=>{
     const [open, setOpen] = useState(false);
@@ -37,7 +38,6 @@ export const Button =({grocery_id, groceryName, text, setGroceries})=>{
         fetchGroceries()
    }
 
-
    const fetchGroceries = async () =>{
     const authorization ={
         headers:{
@@ -56,7 +56,7 @@ export const Button =({grocery_id, groceryName, text, setGroceries})=>{
         } else console.log(`Error: ${err.message}`)
       }
         
-   }
+    }
 
     const customStyles = {
         content: {
@@ -70,13 +70,25 @@ export const Button =({grocery_id, groceryName, text, setGroceries})=>{
     const closeModal =()=>setOpen(false)
     return (
         <div>
-            <button onClick = {openModal}>{text}</button>
-            <Modal isOpen={open} onRequestClose={closeModal} style={customStyles} appElement={document.getElementById('root')}>
-                <h2>Are you sure <br/>you want to delete {groceryName}?</h2>
-                <button onClick= {()=>(deteleGrocery(grocery_id))}>Delete</button>
-                <button onClick={closeModal}>Close Modal</button>
-            </Modal>
+            {
+                text === "Delete" ?
+                <div>
+                    <button onClick = {openModal}>{text}</button>
+                    <Modal isOpen={open} onRequestClose={closeModal} style={customStyles} appElement={document.getElementById('root')}>
+                    <h2>Are you sure <br/>you want to delete {groceryName}?</h2>
+                    <button onClick= {()=>(deteleGrocery(grocery_id))}>Delete</button>
+                    <button onClick={closeModal}>Close Modal</button>
+                    </Modal>
+                </div> :
+                <div>
+                    <button onClick={openModal}>{text}</button>
+                    <Modal isOpen={open} onRequestClose={closeModal} style={customStyles} appElement={document.getElementById('root')}>
+                        <EditGroceries groceryID={grocery_id}/>
+                    </Modal>
+                </div>
+            }
         </div>
+        
     )
 }
 
