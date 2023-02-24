@@ -10,7 +10,7 @@ import secrets
 app = Flask(__name__)
 secret_key = secrets.token_hex(32)
 app.config ['SECRET_KEY'] = secret_key
-app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/grocerydatabase'
+app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/flaskdatabase'
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
@@ -64,20 +64,27 @@ def grocIndex():
 # Add Groceries
 @app.route ('/api/add', methods = ['POST'])
 def postGroceries ():
-    request_data = json.loads(request.data)
-    groceries = groceryList(
-        grocery = request_data['grocery'],
-        quantity = request_data['quantity'],
-        date_to_get =request_data['date_to_get'],
-        userId = request_data['userId']
-    )
-    db.session.add(groceries)
-    db.session.commit()
-    return {'201' : 'grocery data created sucessfully'}
+    try:
+        request_data = json.loads(request.data)
+        groceries = groceryList(
+            grocery = request_data['grocery'],
+            quantity = request_data['quantity'],
+            date_to_get =request_data['date_to_get'],
+            userId = request_data['userId']
+        )
+        db.session.add(groceries)
+        db.session.commit()
+        return {'201' : 'grocery data created sucessfully'}
+    except:
+        return{"Message": "Failed"}
 
 # Delete Groceries
 @app.route('/api/<int:grocery_id>', methods=['DELETE'])
+@jwt_required()
 def deleteGrocery(grocery_id):
+    print('Chec')
+    current_user_id = get_jwt_identity()
+    print('Post chec')
     request_data = json.loads(request.data)
     # groceryID=request_data['grocery_id']
     # grocery = request_data['grocery']

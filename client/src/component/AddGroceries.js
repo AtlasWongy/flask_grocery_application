@@ -30,11 +30,12 @@ export const AddGroceries = ({setGroceries})=>{
         }
         
         addToDB ()
+        fetchGroceries()
         setGrocery('')
         setQuantity('')
         setDate('')
         setInput(true)
-        fetchGroceries()
+        
     }
 
     const fetchGroceries = async ()=>{
