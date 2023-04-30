@@ -33,7 +33,6 @@ const fetchGroceries = async ()=>{
   }
 }
   return (
-    
     <>
         {groceries.map(grocery=>{
             return(
@@ -43,4 +42,3 @@ const fetchGroceries = async ()=>{
     </>
   )
 }
-// export default Groceries

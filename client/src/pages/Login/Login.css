@@ -1,0 +1,14 @@
+.container {
+    display: grid;
+    place-items: center;
+    grid-template-rows: repeat(5, 1fr);
+    padding: 0;
+}
+
+.title-page {
+    grid-row: 3/4;
+}
+
+.login-form {
+    grid-row: 4/5;
+}

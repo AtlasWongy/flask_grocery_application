@@ -1,13 +1,14 @@
 from datetime import timedelta
 from flask import Flask, jsonify, request, json
+from flask_cors import CORS
 from flask_mysqldb import MySQL
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
-# import bcrypt
 import secrets
 
 app = Flask(__name__)
+CORS(app, origins='http://localhost:3000')
 secret_key = secrets.token_hex(32)
 app.config ['SECRET_KEY'] = secret_key
 app.config["SQLALCHEMY_DATABASE_URI"]= 'mysql://root:password123@localhost/grocerydatabase'
@@ -23,8 +24,6 @@ class groceryList(db.Model):
     reminder = db.Column(db.Boolean, nullable=False, default=False)
     int_date = db.Column(db.DateTime, default=db.func.now())
     userId = db.Column(db.Integer, nullable = False )
-    # user = db.relationship('users', backref='groceryList')
-
 
     def __str__(self):
         return f'{self.grocery_id} x {self.quantity}; getBy: {self.date_to_get}; reminder{self.reminder}'
@@ -35,8 +34,6 @@ class users(db.Model):
      id = db.Column(db.Integer, nullable=False, autoincrement = True, primary_key = True)
      username = db.Column(db.String(80), nullable = False, unique=True )
      password = db.Column(db.String(80), nullable = False)
-    #  rocery_list = db.relationship('groceryList', backref='groceryUsers')
-    #  grocerylist = db.relationship('groceryList', backref ='users')
 
      def __repr__(self):
           return f'<users{self.username}>'
@@ -52,8 +49,10 @@ def grocery_serializer(grocery):
         'int_date': grocery.int_date,
         'userId':grocery.userId
     }
+
+
 # Get data
-@app.route('/api',methods = [ 'GET'])
+@app.route('/api',methods = ['GET'])
 @jwt_required()
 def grocIndex():
         current_user_id = get_jwt_identity()
@@ -82,15 +81,12 @@ def postGroceries ():
 @app.route('/api/<int:grocery_id>', methods=['DELETE'])
 @jwt_required()
 def deleteGrocery(grocery_id):
-    print('Chec')
     current_user_id = get_jwt_identity()
-    print('Post chec')
     request_data = json.loads(request.data)
-    # groceryID=request_data['grocery_id']
-    # grocery = request_data['grocery']
     groceryList.query.filter_by(grocery_id = request_data['grocery_id']).delete()
     db.session.commit()
     return {'204':"Delete Success"}
+
 
 # Update Groceries
 @app.route('/api/<int:grocery_id>', methods=['PUT'])
@@ -100,8 +96,6 @@ def updateGrocery(grocery_id):
     grocerylist.quantity = request_data['quantity']
     db.session.commit()
     return {'Success' : 'grocery data updated sucessfully'}, 201
-
-
 
 
 @app.route('/api/register', methods=['POST'])
@@ -139,7 +133,6 @@ def login():
 @app.route('/api/protected', methods=['GET'])
 @jwt_required()
 def protected():
-    print ('Hello')
     current_user_id = get_jwt_identity()
     print(current_user_id)
     user = users.query.filter_by(id=current_user_id).first()

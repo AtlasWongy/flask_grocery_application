@@ -47,8 +47,6 @@ export const Login = ({setAccessToken, accessToken, cookzLifeSpan})=>{
                 setError(true)
                 setErrorMsg('Wrong username and password entered. Please try again')
             }
-
-            
         }
     }
 
