@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9059f745-f5c5-4fb6-ba1a-35fcc5cf068c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/flask_grocery_application.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/AddButton/AddButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AddGroceries/AddGroceries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AppBar/AppBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AppBar/AppBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Dashboard/Dashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Login/Login.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1684661953967</updated>
-      <workItem from="1684661955002" duration="2044000" />
+      <workItem from="1684661955002" duration="3694000" />
     </task>
     <servers />
   </component>

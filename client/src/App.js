@@ -8,7 +8,6 @@ import { Logout } from './loginPage2.0/Logout';
 import { SignUpPage } from './loginPage2.0/SignUp';
 import { PromptTimeOut } from './component/promptTimeOut';
 import { Groceries } from './components/Groceries/Groceries';
-// import { Dashboard } from './components/Dashboard/Dashboard';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import Cookies from 'js-cookie';
 
@@ -19,6 +18,7 @@ function App() {
 
   // Time for cookies check (1min before expiry)
   // For Cookie prompt
+  // 10000
   const time = (5 * 6 * 10000)
     // For cookie life span
   const cookzLifeSpan = (9*6*10000)
@@ -63,7 +63,7 @@ function App() {
           <Route path ='/logout' element = {<Logout setAccessToken={setAccessToken}/>}/>
         </Routes>
       </Router>
-      {promptSession&&<PromptTimeOut  cookzLifeSpan= {cookzLifeSpan} setAccessToken={setAccessToken} setPromptSession={setPromptSession}/>}
+      {promptSession && <PromptTimeOut  cookzLifeSpan= {cookzLifeSpan} setAccessToken={setAccessToken} setPromptSession={setPromptSession}/>}
     </div>
     );
 }

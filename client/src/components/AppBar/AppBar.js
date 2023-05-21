@@ -4,7 +4,13 @@ import {
     Typography,
     IconButton,
     Menu,
-    MenuItem
+    MenuItem,
+    Box,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    Drawer
 } from '@mui/material'
 import { useState } from 'react'
 import { AccountCircle } from '@mui/icons-material'
@@ -14,6 +20,9 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 export const AppBar = () => {
     const [anchorEl, setAnchorEl] = useState(null)
+    const [state, setState] = useState({
+        left: false
+    })
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -22,6 +31,35 @@ export const AppBar = () => {
     const handleClose = () => {
         setAnchorEl(null);
     }
+
+    const handleSideBar = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return
+        }
+
+        console.log("I Clicked!!!!!!!!")
+
+        setState({...state, [anchor]: open})
+    }
+
+    const list = (anchor) => (
+        <Box 
+            sx = {{ width: 250 }}
+            role="presentation"
+            onClick = {handleSideBar(anchor, false)}
+            onKeyDown = {handleSideBar(anchor, false)}
+        >
+            <List>
+                {['Logout'].map((text, index) => (
+                    <ListItem key={text} disablePadding>
+                        <ListItemButton key = {index}>
+                            <ListItemText primary = {text}/>
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+    )
 
     return (
         <div>
@@ -33,9 +71,17 @@ export const AppBar = () => {
                         color='inherit'
                         aria-label='menu'
                         sx = {{ mr : 2}}
+                        onClick={handleSideBar('left', true)}
                     >
                         <MenuIcon/>
                     </IconButton>
+                    <Drawer
+                        anchor='left'
+                        open={state['left']}
+                        onClose={handleSideBar('left', false)}
+                    >
+                        {list('left')}
+                    </Drawer>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >Grocery Dashboard</Typography>
                     <div>
                         <IconButton

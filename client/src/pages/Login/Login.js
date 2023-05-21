@@ -63,7 +63,7 @@ export const Login = ({ setAccessToken, accessToken, cookzLifeSpan }) => {
             {error && <div>{error}</div>}
             <form className='login-form' onSubmit={handleLogin}>
                 <TextField
-                    require
+                    required
                     id='outlined-basic'
                     label='Username'
                     variant='outlined'
@@ -75,7 +75,7 @@ export const Login = ({ setAccessToken, accessToken, cookzLifeSpan }) => {
                 />
                 <br/>
                 <TextField
-                    require
+                    required
                     id='outlined-basic'
                     label='Password'
                     variant='outlined'
