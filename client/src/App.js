@@ -54,7 +54,8 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route exact path="/" element={accessToken ? <Navigate to="/protected" /> : <Login setAccessToken={setAccessToken} accessToken={accessToken} cookzLifeSpan={cookzLifeSpan} />} />
+          <Route exact path="/" element={accessToken ? <Navigate to="/protected"/> :
+              <Login setAccessToken={setAccessToken} accessToken={accessToken} cookzLifeSpan={cookzLifeSpan} />} />
           <Route path="/protected" element={accessToken ? <Protected accessToken={accessToken} /> : <Navigate to="/" />} />
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/groceries" element={<Groceries/>}/>

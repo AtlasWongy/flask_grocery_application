@@ -36,7 +36,7 @@ export const Login = ({ setAccessToken, accessToken, cookzLifeSpan }) => {
         try {
             const response = await api.post('api/login', {username, password})
             console.log(`The status is ${response.status}`)
-            if (response.status == 200) {
+            if (response.status === 200) {
 
                 Cookies.set('userId', response.data.primaryKey)
                 console.log(`Primary Key: ${response.data.primaryKey}`)
